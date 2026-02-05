@@ -36,6 +36,7 @@
       font-size: 20px;
       animation: floatUp 6s linear infinite;
       opacity: 0.7;
+      pointer-events: none;
     }
 
     @keyframes floatUp {
@@ -80,12 +81,13 @@
     }
 
     button {
-      padding: 12px 24px;
-      font-size: 16px;
+      padding: 14px 30px;
+      font-size: 18px;
       border-radius: 30px;
       border: none;
       cursor: pointer;
       transition: 0.3s ease;
+      min-width: 120px;
     }
 
     #yesBtn {
@@ -159,7 +161,7 @@
   </script>
 
   <!-- Main Card -->
-  <div class="card" id="card">
+  <div class="card">
     <h1>
       Tanu,<br/>
       will you be my Valentine? 💕
@@ -180,8 +182,8 @@
       <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGJncjZ6dHV1amJyeGE0bDd4c3FxMmxkbzJ6YTNidHh2MnBzdmE5bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ujTVMASREzuRbH6zy5/giphy.gif" />
 
       <p>
-        I promise I’ll always try to make you smile like this 🫶  
-        Thank you for being YOU 💖
+        I promise I’ll always try to make you smile 🫶  
+        Thank you for being My 💖
       </p>
     </div>
   </div>
@@ -200,16 +202,29 @@
       "Okay stop 😆"
     ];
 
-    noBtn.addEventListener("mouseover", () => {
+    function moveNoButton() {
       noCount++;
 
-      const x = Math.random() * 150 - 75;
-      const y = Math.random() * 120 - 60;
-      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${1 - noCount * 0.08})`;
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 150 - 75;
 
-      noBtn.innerText = noTexts[Math.min(noCount - 1, noTexts.length - 1)];
+      noBtn.style.transform =
+        `translate(${x}px, ${y}px) scale(${Math.max(0.6, 1 - noCount * 0.08)})`;
 
-      yesBtn.style.transform = `scale(${1 + noCount * 0.12})`;
+      noBtn.innerText =
+        noTexts[Math.min(noCount - 1, noTexts.length - 1)];
+
+      yesBtn.style.transform =
+        `scale(${1 + noCount * 0.12})`;
+    }
+
+    /* Desktop */
+    noBtn.addEventListener("mouseover", moveNoButton);
+
+    /* Mobile */
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      moveNoButton();
     });
 
     yesBtn.addEventListener("click", () => {
