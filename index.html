@@ -1,163 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Valentine 💖</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For You 💖</title>
 
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: #f4b6c2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-  }
-
-  .box {
-    background: white;
-    border: 6px solid white;
-    padding: 40px 30px;
-    border-radius: 20px;
-    width: 85%;
-    max-width: 420px;
-    text-align: center;
-    position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    animation: popIn 0.6s ease;
-  }
-
-  @keyframes popIn {
-    0% { transform: scale(0.6); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-
-  h1 {
-    font-size: 22px;
-    color: #111;
-    margin-bottom: 30px;
-  }
-
-  button {
-    width: 100px;
-    height: 45px;
-    font-size: 16px;
-    border-radius: 10px;
-    cursor: pointer;
-    position: fixed;
-  }
-
-  #yes {
-    background: #e63946;
-    color: white;
-    border: none;
-    bottom: 120px;
-    left: 30%;
-    animation: pulse 1.5s infinite;
-  }
-
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-    100% { transform: scale(1); }
-  }
-
-  #no {
-    background: white;
-    color: #333;
-    border: 2px solid #aaa;
-    bottom: 120px;
-    left: 55%;
-  }
-
-  .heart {
-    position: fixed;
-    font-size: 22px;
-    animation: floatUp 3s linear forwards;
-  }
-
-  @keyframes floatUp {
-    0% {
-      transform: translateY(0) scale(1);
-      opacity: 1;
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
     }
-    100% {
-      transform: translateY(-600px) scale(1.5);
-      opacity: 0;
-    }
-  }
 
-  .gif {
-    margin-top: 20px;
-    width: 220px;
-    border-radius: 15px;
-  }
-</style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(120deg, #ffb6c1, #ffc0cb, #ffd6e8);
+      background-size: 300% 300%;
+      animation: bgMove 8s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    /* Card */
+    .card {
+      background: white;
+      width: 90%;
+      max-width: 360px;
+      padding: 30px 20px 35px;
+      border-radius: 25px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      animation: slideUp 1s ease;
+      z-index: 10;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(80px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    #yesBtn {
+      background: #ff3b5c;
+      color: white;
+      font-weight: bold;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+    }
+
+    #noBtn {
+      background: #f1f1f1;
+      border: 2px solid #ccc;
+      position: relative;
+    }
+
+    /* YES screen */
+    .yes-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(120deg, #ff4d6d, #ff85a1);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      z-index: 100;
+      padding: 20px;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .yes-content h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .yes-content p {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .yes-content img {
+      width: 220px;
+      border-radius: 15px;
+      margin: 15px 0;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="box" id="box">
-  <h1>Tanu,<br>will you be my Valentine? 💕</h1>
-</div>
-
-<button id="yes">YES</button>
-<button id="no">NO</button>
-
-<script>
-  const noBtn = document.getElementById("no");
-  const yesBtn = document.getElementById("yes");
-  const box = document.getElementById("box");
-
-  function moveNoButton() {
-    const maxX = window.innerWidth - noBtn.offsetWidth;
-    const maxY = window.innerHeight - noBtn.offsetHeight;
-    noBtn.style.left = Math.random() * maxX + "px";
-    noBtn.style.top = Math.random() * maxY + "px";
-  }
-
-  noBtn.addEventListener("mouseover", moveNoButton);
-  noBtn.addEventListener("touchstart", moveNoButton);
-
-  function createHearts() {
-    const hearts = ["💖","💗","💘","❤️","💕"];
-    for (let i = 0; i < 40; i++) {
+  <!-- Floating hearts -->
+  <script>
+    function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
-      heart.innerText = hearts[Math.floor(Math.random() * hearts.length)];
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.bottom = "-20px";
-      heart.style.animationDuration = 2 + Math.random() * 2 + "s";
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (4 + Math.random() * 3) + "s";
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 4000);
+      setTimeout(() => heart.remove(), 7000);
     }
-  }
+    setInterval(createHeart, 400);
+  </script>
 
-  yesBtn.addEventListener("click", () => {
-    createHearts();
+  <!-- Main Card -->
+  <div class="card" id="card">
+    <h1>
+      Tanu,<br/>
+      will you be my Valentine? 💕
+    </h1>
 
-box.innerHTML = `
-  <h1>💖 YAY!!! 💖</h1>
+    <div class="buttons">
+      <button id="yesBtn">YES 💖</button>
+      <button id="noBtn">NO 😅</button>
+    </div>
+  </div>
 
-  <p style="font-size:18px;">Best decision in your life😘😘</p>
+  <!-- YES SCREEN -->
+  <div class="yes-screen" id="yesScreen">
+    <div class="yes-content">
+      <h2>YAYYYY!!! 😭💖</h2>
+      <p>You just made my whole day 💕</p>
 
-  <img 
-    src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGJncjZ6dHV1amJyeGE0bDd4c3FxMmxkbzJ6YTNidHh2MnBzdmE5bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ujTVMASREzuRbH6zy5/giphy.gif"
-    alt="Happy Dance"
-    class="gif"
-  >
+      <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGJncjZ6dHV1amJyeGE0bDd4c3FxMmxkbzJ6YTNidHh2MnBzdmE5bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ujTVMASREzuRbH6zy5/giphy.gif" />
 
-  <p style="font-size:18px;">I love you ❤️</p>
-`;
+      <p>
+        I promise I’ll always try to make you smile like this 🫶  
+        Thank you for being YOU 💖
+      </p>
+    </div>
+  </div>
 
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const yesScreen = document.getElementById("yesScreen");
 
-    yesBtn.style.display = "none";
-    noBtn.style.display = "none";
-  });
-</script>
+    let noCount = 0;
+    const noTexts = [
+      "Are you sure? 😏",
+      "Think again 😳",
+      "Really?? 🥺",
+      "Last chance 😭",
+      "Okay stop 😆"
+    ];
+
+    noBtn.addEventListener("mouseover", () => {
+      noCount++;
+
+      const x = Math.random() * 150 - 75;
+      const y = Math.random() * 120 - 60;
+      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${1 - noCount * 0.08})`;
+
+      noBtn.innerText = noTexts[Math.min(noCount - 1, noTexts.length - 1)];
+
+      yesBtn.style.transform = `scale(${1 + noCount * 0.12})`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      yesScreen.style.display = "flex";
+    });
+  </script>
 
 </body>
 </html>
