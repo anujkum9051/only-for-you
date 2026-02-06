@@ -14,7 +14,7 @@
     body {
       margin: 0;
       height: 100vh;
-      background: linear-gradient(120deg, #ffb6c1, #ffc0cb, #ffd6e8);
+      background: linear-gradient(120deg, #ff477e, #ff7096, #ff85a1);
       background-size: 300% 300%;
       animation: bgMove 8s ease infinite;
       display: flex;
@@ -29,22 +29,21 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Floating hearts */
-    .heart {
+    .float {
       position: absolute;
-      bottom: -20px;
-      font-size: 20px;
-      animation: floatUp 6s linear infinite;
-      opacity: 0.7;
+      bottom: -30px;
+      font-size: 24px;
+      animation: floatUp linear infinite;
+      opacity: 0.9;
       pointer-events: none;
+      z-index: 50;
     }
 
     @keyframes floatUp {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-120vh); opacity: 0; }
+      from { transform: translateY(0) rotate(0deg); opacity: 1; }
+      to   { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
     }
 
-    /* Card */
     .card {
       background: white;
       width: 90%;
@@ -58,14 +57,8 @@
     }
 
     @keyframes slideUp {
-      from {
-        transform: translateY(80px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
+      from { transform: translateY(80px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
     }
 
     h1 {
@@ -98,15 +91,14 @@
 
     #yesBtn:hover {
       transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(255, 59, 92, 0.4);
     }
 
     #noBtn {
       background: #f1f1f1;
       border: 2px solid #ccc;
-      position: relative;
     }
 
-    /* YES screen */
     .yes-screen {
       position: fixed;
       inset: 0;
@@ -114,30 +106,30 @@
       display: none;
       justify-content: center;
       align-items: center;
+      z-index: 20; 
+    }
+
+    .yes-card {
+      background: white;
+      color: #333;
+      padding: 35px 25px;
+      border-radius: 25px;
+      width: 90%;
+      max-width: 340px;
       text-align: center;
-      color: white;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      animation: slideUp 0.8s ease;
+      position: relative;
       z-index: 100;
-      padding: 20px;
-      animation: fadeIn 0.8s ease;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .yes-content h2 {
+    .yes-card h2 {
       font-size: 32px;
-      margin-bottom: 10px;
+      margin-top: 0;
     }
 
-    .yes-content p {
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
-
-    .yes-content img {
-      width: 220px;
+    .yes-card img {
+      width: 100%;
       border-radius: 15px;
       margin: 15px 0;
     }
@@ -146,97 +138,103 @@
 
 <body>
 
-  <!-- Floating hearts -->
-  <script>
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "💖";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (4 + Math.random() * 3) + "s";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 7000);
-    }
-    setInterval(createHeart, 400);
-  </script>
-
-  <!-- Main Card -->
   <div class="card">
     <h1>
       Hey cutie 👀💖,<br/>
-      will you be my Valentine?😭😭
+      will you be my Valentine? 🤭🙈
     </h1>
 
     <div class="buttons">
       <button id="yesBtn">YES 💖</button>
-      <button id="noBtn">NO 😅</button>
+      <button id="noBtn">NO 😭</button>
     </div>
   </div>
 
-  <!-- YES SCREEN -->
   <div class="yes-screen" id="yesScreen">
-    <div class="yes-content">
+    <div class="yes-card">
       <h2>YAY! 😘💖</h2>
-      <p> Best decision ever💕</p>
+      <p>Best decision ever 💕</p>
 
-      <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTRpN3gxb2w1cWtnZHh5MjVjaGcxY2V5N3FjdHV5bmduZ3Y4N2N0OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PtdOBG0BD9Vvi/giphy.gif" />
+      <img src="https://media0.giphy.com/media/PtdOBG0BD9Vvi/giphy.gif" alt="Happy GIF" />
 
       <p>
-        I love You ❤️🫶<br>
-        Thank you for being My😉
+        I love You ❤️🫶<br/>
+        Thank you for being My 😉
       </p>
     </div>
   </div>
 
   <script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const yesScreen = document.getElementById("yesScreen");
+    const hearts = ["💖","💕","💘","💗","❤️","😍"];
+    const flowers = ["🌸","🌺","🌷","🌼","💐","🌹"];
 
+    let heartInterval;
+    let flowerInterval;
+
+    function createFloat(symbols, speedMin, speedMax) {
+      const el = document.createElement("div");
+      el.className = "float";
+      el.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.animationDuration = (speedMin + Math.random() * speedMax) + "s";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 8000);
+    }
+
+    function startHearts() {
+      clearInterval(heartInterval); 
+      heartInterval = setInterval(() => {
+        createFloat(hearts, 4, 3);
+      }, 300);
+    }
+
+    function startFlowers() {
+      clearInterval(flowerInterval);
+      flowerInterval = setInterval(() => {
+        createFloat(flowers, 3, 2);
+      }, 250);
+    }
+
+    function stopAllAnimations() {
+      clearInterval(heartInterval);
+      clearInterval(flowerInterval);
+    }
+
+    startHearts();
+
+    setTimeout(() => {
+      stopAllAnimations();
+    }, 3000);
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const yesScreen = document.getElementById("yesScreen");
     let noCount = 0;
-    const noTexts = [
-      "Are you sure? 😏",
-      "Think again 😳",
-      "Really?? 🥺",
-      "Last chance 😭",
-      "Okay stop 😆"
-    ];
 
     function moveNoButton() {
       noCount++;
-
-      const x = Math.random() * 200 - 100;
-      const y = Math.random() * 150 - 75;
-
       noBtn.style.transform =
-        `translate(${x}px, ${y}px) scale(${Math.max(0.6, 1 - noCount * 0.08)})`;
-
-      noBtn.innerText =
-        noTexts[Math.min(noCount - 1, noTexts.length - 1)];
-
-      yesBtn.style.transform =
-        `scale(${1 + noCount * 0.12})`;
+        `translate(${Math.random()*200-100}px, ${Math.random()*150-75}px) scale(${Math.max(0.6,1-noCount*0.08)})`;
+      yesBtn.style.transform = `scale(${1 + noCount * 0.12})`;
     }
 
-    /* Desktop */
     noBtn.addEventListener("mouseover", moveNoButton);
-
-    /* Mobile */
-    noBtn.addEventListener("touchstart", (e) => {
+    noBtn.addEventListener("touchstart", e => {
       e.preventDefault();
       moveNoButton();
     });
 
     yesBtn.addEventListener("click", () => {
       yesScreen.style.display = "flex";
+
+      startHearts();
+      startFlowers();
+
+      setTimeout(() => {
+        stopAllAnimations();
+      }, 3000);
     });
   </script>
 
 </body>
 </html>
-
-
-
-
-
-
